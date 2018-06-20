@@ -9,17 +9,12 @@ from datetime import datetime
 import json
 import requests
 
-def sendSlackDm(name, text):
+def sendSlackDm(url, text):
     """
         Parameter :
-            name에는 dan, hyo, joe로 넣어준다.
+            각자 받은 url을 넣어준다.
             text에는 보낼 글 내용
     """
-    slack_urls = {
-        "dan" : "https://hooks.slack.com/services/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",
-        "hyo" : "",
-        "joe" : ""
-    }
     webhook_url = url
     slack_data = {'text': text}
     response = requests.post(
