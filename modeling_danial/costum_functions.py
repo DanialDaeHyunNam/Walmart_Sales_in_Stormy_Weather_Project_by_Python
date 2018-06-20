@@ -19,6 +19,8 @@
 
 from datetime import datetime
 import pandas as pd
+import json
+import requests
 
 # 용이한 처리를 위해 date값은 20140101 format, int 데이터 타입으로 변환
 def dateToNumeric(date):
@@ -176,3 +178,21 @@ def saveDataFrameToCsv(df, fileName, idx = False):
     """
     fileName += "_" + datetime.now().strftime("%Y%m%d%H%M") + ".csv"
     return df.to_csv(fileName, index = idx)
+
+def sendSlackDm(url, text):
+    """
+        Parameter :
+            각자 받은 url을 넣어준다.
+            text에는 보낼 글 내용
+    """
+    webhook_url = url
+    slack_data = {'text': text}
+    response = requests.post(
+        webhook_url,
+        data=json.dumps(slack_data),
+        headers={'Content-Type': 'application/json'}
+    )
+    if response.status_code != 200:
+        raise ValueError(
+            'Request to slack returned an error %s, the response is:\n%s'%(response.status_code, response.text)
+    )
