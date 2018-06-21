@@ -15,6 +15,7 @@
             관할하는 지점들의 정보를 담은 df를 패러미터로 넣어주고, 원하는 기상청 번호를 parameter로 넣어주면 거기에 해당하는 지점들의 정보만을 리턴한다.
     divideIntoNumericAndCategoricalVariables : 컬럼을 확인해서 numerical_features와 categorical_features을 나누는 작업을 해준다.
     saveDataFrameToCsv : 넘겨준 df를 filename + 년월일시간분 의 format으로 이루어진 이름의 파일로 생성해준다.
+    sendSlackDm : slack msg보내는 function
 """
 
 from datetime import datetime
