@@ -76,19 +76,25 @@ def isThereNoneData(df):
     """
     li = list(df.columns)
     m_count_li = []
-    t_count_li = []
+#     t_count_li = []
+#     nan_count_li = []
     for l in li:
         m_count = 0
-        t_count = 0
+#         t_count = 0
+#         nan_count = 0
         for i, contents in enumerate(df[l]):
             contents = str(contents)
             if(contents.strip() == "M"):
                 m_count += 1
-            if(contents.strip() == "T"):
-                t_count += 1
+#             if(contents.strip() == "T"):
+#                 t_count += 1
+#             if(contents.strip() == "nan"):
+#                 nan_count += 1
         m_count_li.append(m_count)
-        t_count_li.append(t_count)
-    return pd.DataFrame({"Column" : li, "Missing Data" : m_count_li, "Trace Data" : t_count_li})
+#         t_count_li.append(t_count)
+#         nan_count_li.append(nan_count)
+#     return pd.DataFrame({"Column" : li, "Missing Data" : m_count_li, "Trace Data" : t_count_li, "NaN Data" : nan_count_li})
+    return pd.DataFrame({"Column" : li, "Missing Data" : m_count_li})
 
 def checkIsThereUnderZeroData(df, df_columns, dtype, num_to_compare_with = 0):
     """
@@ -171,6 +177,20 @@ def divideIntoNumericAndCategoricalVariables(df):
     print("Categorical Features Qty :", len(categorical_features),"\n")
     print("Categorical Features :", categorical_features)
     return numerical_features, categorical_features        
+
+def changeDataType(df, integer_data, float_data):
+    """
+        Parameter : 
+            weather df
+    """
+    for li in integer_data:
+        df[li] = pd.to_numeric(df[li], errors='coerce')
+#         df[li] = df[li].apply(int)
+    for li in float_data:
+#         df[li] = pd.to_numeric(df[li], errors='coerce')
+        df[li] = pd.to_numeric(df[li], errors='coerce')
+        df[li] = df[li].astype(float)
+    return df
 
 def saveDataFrameToCsv(df, fileName, idx = False):
     """
